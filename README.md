@@ -111,7 +111,7 @@ case DBAuthenticator.authenticate(email, password, {MyApp.Repo, MyApp.Accounts.U
 end
 ```
 
-> **Note:** By default, the session is stored into stateless cookies. The library
+> **Note:** By default, the session is stored in a stateless cookie. The library
 > uses the functions from `Plug` to handle data in session, such as
 > `Plug.Conn.put_session/2`, `Plug.Conn.get_session/2`,
 > `Plug.Conn.configure_session/1`, ...

@@ -1,4 +1,16 @@
 defmodule AuthN.Plugs.AssignCurrentUser do
+  @moduledoc ~S"""
+  This plug fetches the current user by the user ID stored in session and stores
+  the fetched user in `conn.assigns`.
+
+  The user is fetched by a function provided through the mandatory `:fetch_user`
+  option; the function receives the user ID as argument.
+
+  In case no user ID is stored in session, this plug does nothing (just returns
+  the `conn` received). In case a user ID is stored in session, but no user can
+  be found for that ID, the plug clears the session.
+  """
+
   def init(opts) do
     Keyword.fetch!(opts, :fetch_user)
     opts

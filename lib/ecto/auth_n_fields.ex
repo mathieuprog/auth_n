@@ -1,4 +1,11 @@
 defmodule AuthN.Ecto.AuthNFields do
+  @moduledoc ~S"""
+  Provides macros for defining the fields that are used for user accounts'
+  credentials. `identifier_field/1` defines the field storing the login name
+  (usually the user's email or username) and `password_field/1` defines the
+  field storing the hashed password.
+  """
+
   @callback get_identifier_field() :: atom
   @callback get_password_field() :: atom
 
@@ -25,6 +32,9 @@ defmodule AuthN.Ecto.AuthNFields do
     end
   end
 
+  @doc ~S"""
+  Defines which field stores the user's login (usually an email or username).
+  """
   defmacro identifier_field(field_name) do
     quote do
       field(unquote(field_name), :string)
@@ -33,11 +43,12 @@ defmodule AuthN.Ecto.AuthNFields do
     end
   end
 
+  @doc ~S"""
+  Defines which field is used for the user's password.
+  """
   defmacro password_field(field_name) do
     quote do
       field(unquote(field_name), :string)
-
-      field(:__unhashed_password, :string, virtual: true)
 
       Module.put_attribute(__MODULE__, :password_field, unquote(field_name))
     end
