@@ -29,10 +29,6 @@ argument is a tuple containing your Repo module name and the user account Schema
 struct. This function is typically called in the controller action handling login
 submissions; the email and password being provided by the user through a login form.
 
-This library assumes you are using `Argon2` to hash your passwords. `Argon2` is
-recommended over `bcrypt`.See
-[argon2_elixir](https://github.com/riverrun/argon2_elixir).
-
 ```elixir
 alias AuthN.Authenticator.DBAuthenticator
 
@@ -53,6 +49,14 @@ case DBAuthenticator.authenticate(email, password, {MyApp.Repo, MyApp.Accounts.U
     |> render("new.html")
 end
 ```
+
+By default, the library will use the `Argon2` hash function to verify passwords.
+`Argon2` is recommended over `bcrypt`.See
+[argon2_elixir](https://github.com/riverrun/argon2_elixir). You may change the
+default password-hashing function through the `:hashing_module` option, by passing
+it a module name which implements the `Comeonin` and `Comeonin.PasswordHash`
+behaviours from the [comeonin](https://github.com/riverrun/comeonin) library, such
+as [bcrypt_elixir](https://github.com/riverrun/bcrypt_elixir).
 
 In most situations you do not want to reveal if the account exists in case of a
 failed authentication:

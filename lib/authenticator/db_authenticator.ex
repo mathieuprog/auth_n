@@ -5,8 +5,11 @@ defmodule AuthN.Authenticator.DBAuthenticator do
   The given schema must implement the `AuthN.Ecto.AuthNFields` behaviour, which
   allows this function to retrieve the identifier and password schema field names.
 
-  Currently, this function assumes the password is hashed using the `Argon2`
-  function. `Argon2` is recommended over `bcrypt`. See `argon2_elixir` package.
+  By default, this function uses the `Argon2` password-hashing function from the
+  `argon2_elixir` library. The default may be replaced by passing a module name to
+  the `:hashing_module` option that implements the `Comeonin` and
+  `Comeonin.PasswordHash` behaviours from the `comeonin` library, such as `Bcrypt`
+  from the `bcrypt_elixir` library.
 
   Returns the tuple `{:ok, user}` in case of successful authentication (where user
   is the struct fetched from the data store that aligns with the given credentials),
@@ -14,8 +17,11 @@ defmodule AuthN.Authenticator.DBAuthenticator do
   store, and `{:error, :wrong_password}` in case the given password doesn't match the
   one found in the data store.
   """
-  @spec authenticate(String.t(), String.t(), {atom, atom}) :: {:ok, struct} | {:error, atom}
-  def authenticate(identifier, password, {repo_module_name, schema_module_name}) do
+  @spec authenticate(String.t(), String.t(), {atom, atom}, keyword) ::
+          {:ok, struct} | {:error, atom}
+  def authenticate(identifier, password, {repo_module_name, schema_module_name}, opts \\ []) do
+    hashing_module = Keyword.get(opts, :hashing_module, Argon2)
+
     identifier_field = schema_module_name.get_identifier_field()
     password_field = schema_module_name.get_password_field()
 
@@ -23,13 +29,13 @@ defmodule AuthN.Authenticator.DBAuthenticator do
 
     cond do
       user == nil ->
-        Argon2.no_user_verify()
+        hashing_module.no_user_verify()
         {:error, :unknown_user}
 
       true ->
         stored_hashed_password = Map.fetch!(user, password_field)
 
-        if Argon2.verify_pass(password, stored_hashed_password) do
+        if hashing_module.verify_pass(password, stored_hashed_password) do
           {:ok, user}
         else
           {:error, :wrong_password}
