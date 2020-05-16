@@ -7,7 +7,7 @@ Add `auth_n` for Elixir as a dependency in your `mix.exs` file:
 ```elixir
 def deps do
   [
-    {:auth_n, "~> 0.10.0"}
+    {:auth_n, "~> 0.11.0"}
   ]
 end
 ```
