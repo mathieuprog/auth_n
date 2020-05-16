@@ -4,7 +4,7 @@ defmodule AuthN.HTML.AuthNHelpers do
   """
   @spec authenticated?(Plug.Conn.t()) :: boolean
   def authenticated?(conn) do
-    {user_token, conn} = AuthN.SessionStorage.get_user_token(conn)
+    {user_token, _conn} = AuthN.SessionStorage.get_user_token(conn)
     !!user_token
   end
 
