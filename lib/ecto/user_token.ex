@@ -11,24 +11,6 @@ defmodule AuthN.Ecto.UserToken do
     session_validity_in_days = Keyword.get(opts, :session_validity_in_days, 60)
 
     quote do
-      @doc """
-      Verifies the password.
-
-      Returns the given user if valid,
-
-      If there is no user or the user doesn't have a password, we call
-      `Argon2.no_user_verify/0` to avoid timing attacks.
-      """
-      def valid_password?(%{hashed_password: hashed_password}, password)
-          when is_binary(hashed_password) and byte_size(password) > 0 do
-        Argon2.verify_pass(password, hashed_password)
-      end
-
-      def valid_password?(_, _) do
-        Argon2.no_user_verify()
-        false
-      end
-
       defmodule unquote(Module.concat([user_schema, Token])) do
         use unquote(ecto_schema)
 

@@ -46,7 +46,7 @@ defmodule AuthN.Ecto.Accounts do
       def get_user_by_email_and_password(email, password)
           when is_binary(email) and is_binary(password) do
         user = Repo.get_by(User, [{unquote(email_field), email}])
-        if User.valid_password?(user, password), do: user
+        if AuthN.valid_password?(user, :hashed_password, password), do: user
       end
 
       @doc """

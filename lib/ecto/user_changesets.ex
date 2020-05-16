@@ -101,7 +101,7 @@ defmodule AuthN.Ecto.UserChangesets do
       Validates the current password otherwise adds an error to the changeset.
       """
       def validate_current_password(changeset, password) do
-        if valid_password?(changeset.data, password) do
+        if AuthN.valid_password?(changeset.data, unquote(hashed_password_field), password) do
           changeset
         else
           add_error(changeset, :current_password, "is not valid")

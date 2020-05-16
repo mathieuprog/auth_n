@@ -1,10 +1,9 @@
 defmodule AuthN do
-  def valid_password?(%{} = user, password, opts \\ [])
+  def valid_password?(user, hashed_password_field, password, opts \\ [])
       when byte_size(password) > 0 do
-    field = Keyword.get(opts, :hashed_password_field, :hashed_password)
     hashing_module = Keyword.get(opts, :hashing_module, Argon2)
 
-    case Map.get(user, field) do
+    case user && Map.get(user, hashed_password_field) do
       nil ->
         hashing_module.no_user_verify()
         false
