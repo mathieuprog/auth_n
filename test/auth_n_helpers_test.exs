@@ -19,13 +19,13 @@ defmodule AuthN.HTML.AuthNHelpersTest do
 
     conn =
       conn
-      |> SessionStorage.put_user_id("the user ID")
-      |> AssignCurrentUser.call(fetch_user: fn _user_id -> %{name: "john"} end)
+      |> SessionStorage.put_user_token("the user ID")
+      |> AssignCurrentUser.call(get_user_by_session_token_fun: fn _user_token -> %{name: "john"} end)
 
     assert true == AuthNHelpers.authenticated?(conn)
     assert %{name: "john"} = AuthNHelpers.current_user(conn)
 
-    conn = SessionStorage.delete_user_id(conn)
+    conn = SessionStorage.delete_user_token(conn)
 
     assert false == AuthNHelpers.authenticated?(conn)
     assert nil == AuthNHelpers.current_user(conn)

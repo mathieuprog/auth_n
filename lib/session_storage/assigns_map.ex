@@ -7,17 +7,19 @@ defmodule AuthN.SessionStorage.AssignsMap do
 
   @type conn :: %Plug.Conn{}
 
-  @spec get_user_id(conn) :: term | nil
-  def get_user_id(conn) do
-    case conn.private do
-      %{auth_current_user_id: current_user_id} -> current_user_id
-      _ -> nil
-    end
+  @spec get_user_token(conn) :: {term | nil, conn}
+  def get_user_token(conn) do
+    user_token =
+      case conn.private do
+        %{auth_user_token: user_token} -> user_token
+        _ -> nil
+      end
+    {user_token, conn}
   end
 
-  @spec put_user_id(conn, term) :: conn
-  def put_user_id(conn, user_id), do: Plug.Conn.put_private(conn, :auth_current_user_id, user_id)
+  @spec put_user_token(conn, term) :: conn
+  def put_user_token(conn, user_token), do: Plug.Conn.put_private(conn, :auth_user_token, user_token)
 
-  @spec delete_user_id(conn) :: conn
-  def delete_user_id(conn), do: %{conn | private: Map.delete(conn.private, :auth_current_user_id)}
+  @spec delete_user_token(conn, function) :: conn
+  def delete_user_token(conn, _), do: %{conn | private: Map.delete(conn.private, :auth_user_token)}
 end

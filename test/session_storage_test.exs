@@ -11,12 +11,12 @@ defmodule AuthN.SessionStorageTest do
     conn =
       conn(:get, "/")
       |> SetSessionStorage.call(session_storage: AssignsMap)
-      |> SessionStorage.put_user_id("the user ID")
+      |> SessionStorage.put_user_token("the user ID")
 
-    assert "the user ID" == SessionStorage.get_user_id(conn)
+    assert {"the user ID", conn} == SessionStorage.get_user_token(conn)
 
-    conn = SessionStorage.delete_user_id(conn)
+    conn = SessionStorage.delete_user_token(conn)
 
-    assert nil == SessionStorage.get_user_id(conn)
+    assert {nil, conn} == SessionStorage.get_user_token(conn)
   end
 end
