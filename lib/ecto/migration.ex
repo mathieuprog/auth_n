@@ -19,7 +19,7 @@ defmodule AuthN.Ecto.Migration do
   def down(opts \\ []) do
     name = Keyword.get(opts, :name, :users_tokens)
 
-    drop_if_exists table(name)
     drop_if_exists index(name, [:context, :token])
+    drop_if_exists table(name)
   end
 end
