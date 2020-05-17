@@ -1,7 +1,7 @@
 defmodule AuthN.MixProject do
   use Mix.Project
 
-  @version "0.12.0"
+  @version "0.13.0"
 
   def project do
     [
@@ -31,6 +31,7 @@ defmodule AuthN.MixProject do
 
   defp deps do
     [
+      {:ecto_sql, "~> 3.2"},
       {:argon2_elixir, "~> 2.0", optional: true},
       {:ecto, "~> 3.2", optional: true},
       {:phoenix_html, "~> 2.13", optional: true},
@@ -38,7 +39,6 @@ defmodule AuthN.MixProject do
       {:ex_doc, "~> 0.21", only: :dev},
       {:inch_ex, "~> 2.0", only: :dev},
       {:dialyxir, "~> 0.5", only: :dev},
-      {:ecto_sql, "~> 3.2", only: :test},
       {:postgrex, "~> 0.14", only: :test},
       {:ex_machina, "~> 2.3", only: :test}
     ]
