@@ -1,4 +1,4 @@
-defmodule AuthN.RedirectIfUserIsAuthenticated do
+defmodule AuthN.Plugs.RedirectIfUserIsAuthenticated do
   import Plug.Conn
   import Phoenix.Controller
 
