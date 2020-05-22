@@ -1,14 +1,13 @@
 defmodule AuthN.MixProject do
   use Mix.Project
 
-  @version "0.14.0"
+  @version "0.20.0"
 
   def project do
     [
       app: :auth_n,
       elixir: "~> 1.9",
       deps: deps(),
-      aliases: aliases(),
       elixirc_paths: elixirc_paths(Mix.env()),
 
       # Hex
@@ -31,16 +30,12 @@ defmodule AuthN.MixProject do
 
   defp deps do
     [
-      {:ecto_sql, "~> 3.2"},
-      {:argon2_elixir, "~> 2.0", optional: true},
-      {:ecto, "~> 3.2", optional: true},
       {:phoenix_html, "~> 2.13", optional: true},
       {:plug, "~> 1.8.3 or ~> 1.9", optional: true},
+      {:phoenix, "~> 1.5", optional: true},
       {:ex_doc, "~> 0.21", only: :dev},
       {:inch_ex, "~> 2.0", only: :dev},
-      {:dialyxir, "~> 0.5", only: :dev},
-      {:postgrex, "~> 0.14", only: :test},
-      {:ex_machina, "~> 2.3", only: :test}
+      {:dialyxir, "~> 0.5", only: :dev}
     ]
   end
 
@@ -52,17 +47,6 @@ defmodule AuthN.MixProject do
       licenses: ["Apache 2.0"],
       maintainers: ["Mathieu Decaffmeyer"],
       links: %{"GitHub" => "https://github.com/mathieuprog/auth_n"}
-    ]
-  end
-
-  defp aliases do
-    [
-      test: [
-        "ecto.create --quiet",
-        "ecto.rollback --all",
-        "ecto.migrate",
-        "test"
-      ]
     ]
   end
 

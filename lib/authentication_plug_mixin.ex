@@ -48,9 +48,7 @@ defmodule AuthN.AuthenticationPlugMixin do
       def init(opts), do: opts
 
       def call(conn, opts) do
-        {user_token, conn} = AuthN.SessionStorage.get_user_token(conn)
-
-        if user_token do
+        if conn.assigns[:current_user] do
           conn
         else
           __MODULE__.handle_authentication_error(conn, Keyword.get(opts, :resource))
