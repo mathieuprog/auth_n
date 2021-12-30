@@ -30,12 +30,11 @@ defmodule AuthN.MixProject do
 
   defp deps do
     [
-      {:phoenix_html, "~> 2.13", optional: true},
-      {:plug, "~> 1.8.3 or ~> 1.9", optional: true},
-      {:phoenix, "~> 1.5", optional: true},
-      {:ex_doc, "~> 0.21", only: :dev},
-      {:inch_ex, "~> 2.0", only: :dev},
-      {:dialyxir, "~> 0.5", only: :dev}
+      {:phoenix_html, "~> 3.2", optional: true},
+      {:plug, "~> 1.12", optional: true},
+      {:phoenix, "~> 1.6", optional: true},
+      {:ex_doc, "~> 0.26", only: :dev},
+      {:inch_ex, "~> 2.0", only: :dev}
     ]
   end
 
