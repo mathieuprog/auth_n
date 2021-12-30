@@ -2,7 +2,7 @@ defmodule AuthN.Plugs.SetSessionStorage do
   @moduledoc ~S"""
   This plug allows to change the storage mechanism for sessions.
 
-  By default, the session is stored into a stateless cookie.
+  By default, the session is stored into a signed cookie.
   """
 
   def init(opts), do: opts

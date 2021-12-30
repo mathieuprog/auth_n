@@ -4,7 +4,7 @@ defmodule AuthN.SessionStorage do
 
   This module serves as an interface, delegating calls to another module implementing
   the session's storage logic. The default implementation module is
-  `AuthN.SessionStorage.StatelessCookie`, which stores sessions into stateless cookies.
+  `AuthN.SessionStorage.SignedCookie`, which stores sessions into signed cookies.
   Another module implementing sessions storage can be specified by adding the module
   name into the `:session_storage` key of `conn.private`.
   """
@@ -16,7 +16,7 @@ defmodule AuthN.SessionStorage do
 
   @spec session_storage(conn) :: atom
   defp session_storage(conn),
-    do: Map.get(conn.private, :session_storage, AuthN.SessionStorage.StatelessCookie)
+    do: Map.get(conn.private, :session_storage, AuthN.SessionStorage.SignedCookie)
 
   @spec get_user_token(conn) :: term | nil
   def get_user_token(conn),

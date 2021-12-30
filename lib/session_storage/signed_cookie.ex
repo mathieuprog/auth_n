@@ -1,6 +1,6 @@
-defmodule AuthN.SessionStorage.StatelessCookie do
+defmodule AuthN.SessionStorage.SignedCookie do
   @moduledoc ~S"""
-  Module for storing sessions into stateless cookies.
+  Module for storing sessions into signed cookies.
 
   This is the library's default storage mechanism for storing sessions.
   """
